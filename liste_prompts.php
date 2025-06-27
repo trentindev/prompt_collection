@@ -29,6 +29,7 @@ $result = mysqli_query($conn, $sql);
 </head>
 
 <body>
+  <?php include 'header.php'; ?>
   <h1>Liste des Prompts enregistrés</h1>
 
   <table>

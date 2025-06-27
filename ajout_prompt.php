@@ -1,6 +1,10 @@
 <?php
-// Connexion (à adapter selon environnement)
-include 'config_local.php'; // ou config_infinity.php
+// Détection de l’environnement (local ou InfinityFree)
+if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+  include 'config_local.php';
+} else {
+  include 'config_infinity.php';
+}
 
 // Récupération des types
 $types = mysqli_query($conn, "SELECT id, nom FROM types");
@@ -19,6 +23,7 @@ $outils = mysqli_query($conn, "SELECT id, nom FROM outils");
 </head>
 
 <body>
+  <?php include 'header.php'; ?>
   <h1>Ajouter un nouveau prompt</h1>
 
   <form action="traitement_prompt.php" method="POST">
