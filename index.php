@@ -1,15 +1,25 @@
+<?php
+include 'header.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
   <meta charset="UTF-8">
-  <title>Formulaire de contact</title>
+  <title>Promptothèque - Accueil</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <?php include 'header.php'; ?>
-  <h1>Accueil</h1>
+  <main class="home">
+    <h1>Promptothèque</h1>
+    <img src="logo.png" alt="Logo du site" class="logo">
+    <p>Votre bibliothèque personnelle de prompts pour l’IA</p>
+    <p>Ajoutez, classez et retrouvez facilement vos prompts pour ChatGPT, MidJourney, DALL·E et plus encore.</p>
+
+  </main>
+
+  <?php include 'footer.php'; ?>
 </body>
 
 </html>
