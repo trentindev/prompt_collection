@@ -177,6 +177,18 @@ footer {
   color: #555;
 }
 
+/* Favoris */
+.toggle-favori {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.toggle-favori:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s ease-in-out;
+}
+
+
 /* Responsive */
 @media (max-width: 600px) {
   nav ul {
