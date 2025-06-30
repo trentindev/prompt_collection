@@ -1,5 +1,5 @@
 <?php
-// Détection de l’environnement (local ou InfinityFree)
+// Détection de l’environnement
 if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
   include 'config_local.php';
 } else {
@@ -48,16 +48,19 @@ $result = mysqli_query($conn, $sql);
       <?php if (mysqli_num_rows($result) > 0): ?>
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
           <tr>
-            <td><?= $row['titre'] ?></td>
-            <td><?= nl2br($row['contenu']) ?></td>
-            <td><?= $row['type_nom'] ?></td>
+            <td><?= htmlspecialchars($row['titre']) ?></td>
+            <td>
+              <div class="contenu-prompt"><?= nl2br(htmlspecialchars($row['contenu'])) ?></div>
+              <div class="prompt-actions">
+                <button class="toggle-btn">Voir plus</button>
+                <button class="copy-btn" data-content="<?= htmlspecialchars($row['contenu']) ?>">Copier</button>
+              </div>
+            </td>
+
+            <td><?= htmlspecialchars($row['type_nom']) ?></td>
             <td><?= $row['outil_nom'] ?? '—' ?></td>
             <td><?= $row['observation'] ?? '' ?></td>
-            <td>
-              <span class="toggle-favori" data-id="<?= $row['id'] ?>" style="cursor:pointer">
-                <?= $row['favori'] ? '⭐' : '☆' ?>
-              </span>
-            </td>
+            <td><?= $row['favori'] ? '⭐' : '' ?></td>
             <td><?= $row['date_creation'] ?></td>
           </tr>
         <?php endwhile; ?>
@@ -70,30 +73,41 @@ $result = mysqli_query($conn, $sql);
   </table>
 
   <p><a href="ajout_prompt.php">Ajouter un nouveau prompt</a></p>
-  <!-- Script à la fin du fichier, qui :
-- écoute les clics sur les étoiles
-- envoie une requête AJAX POST vers toggle_favori_ajax.php
-- met à jour dynamiquement l’étoile affichée selon la réponse du serveur 
--->
-  <script>
-    document.querySelectorAll('.toggle-favori').forEach(elem => {
-      elem.addEventListener('click', () => {
-        const id = elem.dataset.id;
 
-        fetch('toggle_favori_ajax.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: `id=${id}`
-        })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              elem.textContent = data.favori ? '⭐' : '☆';
-            } else {
-              alert("Erreur : " + data.error);
-            }
-          })
-          .catch(() => alert("Erreur de communication avec le serveur"));
+  <script>
+    // Copie
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const contenu = btn.getAttribute('data-content');
+        navigator.clipboard.writeText(contenu).then(() => {
+          btn.textContent = 'Copié !';
+          setTimeout(() => btn.textContent = 'Copier', 1500);
+        }).catch(err => {
+          console.error('Erreur lors de la copie :', err);
+        });
+      });
+    });
+  </script>
+  <script>
+    // Bouton Voir plus / Réduire
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const promptDiv = btn.closest('td').querySelector('.contenu-prompt');
+        promptDiv.classList.toggle('expanded');
+        btn.textContent = promptDiv.classList.contains('expanded') ? 'Réduire' : 'Voir plus';
+      });
+    });
+
+    // Bouton Copier
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.getAttribute('data-content');
+        navigator.clipboard.writeText(content).then(() => {
+          btn.textContent = 'Copié !';
+          setTimeout(() => btn.textContent = 'Copier', 1500);
+        }).catch(err => {
+          console.error('Erreur de copie :', err);
+        });
       });
     });
   </script>
@@ -101,6 +115,4 @@ $result = mysqli_query($conn, $sql);
 </body>
 
 </html>
-
-<?php
-mysqli_close($conn);
+<?php mysqli_close($conn); ?>
