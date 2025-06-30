@@ -60,7 +60,11 @@ $result = mysqli_query($conn, $sql);
             <td><?= htmlspecialchars($row['type_nom']) ?></td>
             <td><?= $row['outil_nom'] ?? '—' ?></td>
             <td><?= $row['observation'] ?? '' ?></td>
-            <td><?= $row['favori'] ? '⭐' : '' ?></td>
+            <td>
+              <span class="toggle-favori" data-id="<?= $row['id'] ?>" style="cursor:pointer">
+                <?= $row['favori'] ? '⭐' : '☆' ?>
+              </span>
+            </td>
             <td><?= $row['date_creation'] ?></td>
           </tr>
         <?php endwhile; ?>
@@ -73,7 +77,7 @@ $result = mysqli_query($conn, $sql);
   </table>
 
   <p><a href="ajout_prompt.php">Ajouter un nouveau prompt</a></p>
-
+  <?php include 'footer.php'; ?>
   <script>
     // Copie
     document.querySelectorAll('.copy-btn').forEach(btn => {
@@ -108,6 +112,36 @@ $result = mysqli_query($conn, $sql);
         }).catch(err => {
           console.error('Erreur de copie :', err);
         });
+      });
+    });
+  </script>
+
+  <!-- Script à la fin du fichier, qui :
+- écoute les clics sur les étoiles
+- envoie une requête AJAX POST vers toggle_favori_ajax.php
+- met à jour dynamiquement l’étoile affichée selon la réponse du serveur 
+-->
+  <script>
+    document.querySelectorAll('.toggle-favori').forEach(elem => {
+      elem.addEventListener('click', () => {
+        const id = elem.dataset.id;
+
+        fetch('toggle_favori_ajax.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `id=${id}`
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              elem.textContent = data.favori ? '⭐' : '☆';
+            } else {
+              alert("Erreur : " + data.error);
+            }
+          })
+          .catch(() => alert("Erreur de communication avec le serveur"));
       });
     });
   </script>
