@@ -213,6 +213,35 @@ footer {
   transition: opacity 0.2s ease-in-out;
 }
 
+/* Delete button */
+.delete-form {
+  border: none;
+  background: none;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.1rem;
+}
+
+.trash-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: rgb(199, 16, 16);
+  /* La couleur s'applique au fill via currentColor */
+  cursor: pointer;
+}
+
+
+.delete-btn:hover .trash-icon {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+
+
 
 /* Responsive */
 @media (max-width: 600px) {

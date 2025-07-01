@@ -38,7 +38,7 @@ $result = mysqli_query($conn, $sql);
         <th>Outil</th>
         <th>Observation</th>
         <th>Favori</th>
-        <th>Date</th>
+        <th>Supprimer</th>
       </tr>
     </thead>
     <tbody>
@@ -62,7 +62,19 @@ $result = mysqli_query($conn, $sql);
                 <?= $row['favori'] ? '⭐' : '☆' ?>
               </span>
             </td>
-            <td><?= $row['date_creation'] ?></td>
+            <td>
+              <form class="delete-form" action="../helper/delete_prompt.php" method="POST"
+                onsubmit="return confirm('Confirmer la suppression ?');">
+                <input type="hidden" name="id" value="<?= $row['id'] ?>">
+
+                <button type="submit" class="delete-btn" title="Supprimer">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="trash-icon">
+                    <path fill="currentColor"
+                      d="M268 416h24a12 12 0 0012-12V204a12 12 0 00-12-12h-24a12 12 0 00-12 12v200a12 12 0 0012 12zm-88 0h24a12 12 0 0012-12V204a12 12 0 00-12-12h-24a12 12 0 00-12 12v200a12 12 0 0012 12zm184-336h-72l-9.4-18.7A24 24 0 00360 48H88a24 24 0 00-21.6 13.3L57 80H8A8 8 0 000 88v16a8 8 0 008 8h16l21.2 339a48 48 0 0047.9 45h261.9a48 48 0 0047.9-45L424 112h16a8 8 0 008-8V88a8 8 0 00-8-8zM128 432a16 16 0 01-16-15.1L90.8 128h266.4L336 416a16 16 0 01-16 16H128z" />
+                  </svg>
+                </button>
+              </form>
+            </td>
           </tr>
         <?php endwhile; ?>
       <?php else: ?>
