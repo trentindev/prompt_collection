@@ -1,2 +1,6 @@
 <?php
-define('BASE_URL', '/prompt_collection'); // Adapter au nom réel du dossier à la racine
+// Détection du serveur
+$isLocalhost = strpos($_SERVER['HTTP_HOST'], 'localhost') !== false;
+
+// BASE_URL dépend de l’environnement
+define('BASE_URL', $isLocalhost ? '/prompt_collection' : '');

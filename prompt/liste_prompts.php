@@ -47,7 +47,7 @@ $result = mysqli_query($conn, $sql);
           <tr>
             <td><?= htmlspecialchars($row['titre']) ?></td>
             <td>
-              <div class="contenu-prompt"><?= nl2br(htmlspecialchars($row['contenu'])) ?></div>
+              <div class="contenu-prompt"><?= nl2br($row['contenu']) ?></div>
               <div class="prompt-actions">
                 <button class="toggle-btn">Voir plus</button>
                 <button class="copy-btn" data-content="<?= htmlspecialchars($row['contenu']) ?>">Copier</button>
