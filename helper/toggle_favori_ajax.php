@@ -1,11 +1,8 @@
 <?php
+
 header('Content-Type: application/json');
 
-if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
-  include 'config_local.php';
-} else {
-  include 'config_infinity.php';
-}
+include __DIR__ . '/../includes/db_connect.php';
 
 $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
 

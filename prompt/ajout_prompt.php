@@ -1,10 +1,6 @@
 <?php
-// Détection de l’environnement (local ou InfinityFree)
-if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
-  include 'config_local.php';
-} else {
-  include 'config_infinity.php';
-}
+// Détection de l’environnement
+require_once __DIR__ . '/../includes/db_connect.php';
 
 // Récupération des types
 $types = mysqli_query($conn, "SELECT id, nom FROM types");
@@ -19,11 +15,11 @@ $outils = mysqli_query($conn, "SELECT id, nom FROM outils");
 <head>
   <meta charset="UTF-8">
   <title>Ajouter un prompt</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../asset/style.css">
 </head>
 
 <body>
-  <?php include 'header.php'; ?>
+  <?php include __DIR__ . '/../includes/header.php'; ?>
   <h1>Ajouter un nouveau prompt</h1>
 
   <form action="traitement_prompt.php" method="POST">

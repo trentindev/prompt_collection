@@ -1,10 +1,7 @@
 <?php
+
 // Détection de l’environnement
-if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
-  include 'config_local.php';
-} else {
-  include 'config_infinity.php';
-}
+include __DIR__ . '/../includes/db_connect.php';
 
 // Requête SQL avec jointures pour récupérer type et outil (si présent)
 $sql = "
@@ -25,11 +22,11 @@ $result = mysqli_query($conn, $sql);
 <head>
   <meta charset="UTF-8">
   <title>Liste des Prompts</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../asset/style.css">
 </head>
 
 <body>
-  <?php include 'header.php'; ?>
+  <?php include __DIR__ . '/../includes/header.php'; ?>
   <h1>Liste des Prompts enregistrés</h1>
 
   <table>
@@ -77,7 +74,8 @@ $result = mysqli_query($conn, $sql);
   </table>
 
   <p><a href="ajout_prompt.php">Ajouter un nouveau prompt</a></p>
-  <?php include 'footer.php'; ?>
+  <?php include __DIR__ . '/../includes/footer.php'; ?>
+
   <script>
     // Copie
     document.querySelectorAll('.copy-btn').forEach(btn => {
@@ -123,10 +121,12 @@ $result = mysqli_query($conn, $sql);
 -->
   <script>
     document.querySelectorAll('.toggle-favori').forEach(elem => {
+      console.log(elem);
       elem.addEventListener('click', () => {
         const id = elem.dataset.id;
+        console.log('id : ', id)
 
-        fetch('toggle_favori_ajax.php', {
+        fetch('../helper/toggle_favori_ajax.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

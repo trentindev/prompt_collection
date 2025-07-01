@@ -1,10 +1,6 @@
 <?php
 // Inclusion de la configuration en fonction de l’environnement
-if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
-  include 'config_local.php';
-} else {
-  include 'config_infinity.php';
-}
+require_once __DIR__ . '/includes/db_connect.php';
 
 // Sécurisation et récupération des données du formulaire
 $titre = htmlspecialchars(trim($_POST['titre'] ?? ''));
