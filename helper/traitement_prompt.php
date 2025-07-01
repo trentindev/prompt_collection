@@ -1,6 +1,6 @@
 <?php
 // Inclusion de la configuration en fonction de l’environnement
-require_once __DIR__ . '/includes/db_connect.php';
+require_once __DIR__ . '/../includes/db_connect.php';
 
 // Sécurisation et récupération des données du formulaire
 $titre = htmlspecialchars(trim($_POST['titre'] ?? ''));
@@ -34,8 +34,8 @@ if ($titre && $contenu && $id_type) {
   // Exécution
   if (mysqli_stmt_execute($stmt)) {
     echo "Le prompt a bien été enregistré.<br>";
-    echo '<a href="ajout_prompt.php">Ajouter un autre prompt</a> | ';
-    echo '<a href="liste_prompts.php">Voir les prompts</a>';
+    echo '<a href="../prompt/ajout_prompt.php">Ajouter un autre prompt</a> | ';
+    echo '<a href="../prompt/liste_prompts.php">Voir les prompts</a>';
   } else {
     echo "Erreur à l’enregistrement : " . mysqli_stmt_error($stmt);
   }

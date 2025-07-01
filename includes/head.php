@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="./asset/style.css">
   <link rel="icon" href="/asset/logo.png" type="image/png">
 
-  <script src="https://kit.fontawesome.com/4a3c2caafc.js" crossorigin="anonymous"></script>
+
 
 </head>
 

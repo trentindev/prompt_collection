@@ -22,7 +22,8 @@ $outils = mysqli_query($conn, "SELECT id, nom FROM outils");
   <?php include __DIR__ . '/../includes/header.php'; ?>
   <h1>Ajouter un nouveau prompt</h1>
 
-  <form action="traitement_prompt.php" method="POST">
+  <form action="../helper/traitement_prompt.php" method="POST">
+
     <label for="titre">Titre :</label><br>
     <input type="text" name="titre" required><br><br>
 
